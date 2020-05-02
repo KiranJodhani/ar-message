@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>8959056649-ea7205aj7asnsgm41sj26riuqcv932mn.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.8959056649-ea7205aj7asnsgm41sj26riuqcv932mn</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDzH-57ud3jrrQgUyNw0mGG2OSF8_KO-44</string>
+	<key>GCM_SENDER_ID</key>
+	<string>8959056649</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.devstree.armessage</string>
+	<key>PROJECT_ID</key>
+	<string>ar-message-c73bf</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ar-message-c73bf.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:8959056649:ios:248caada5fa2f23a4bd1d8</string>
+	<key>DATABASE_URL</key>
+	<string>https://ar-message-c73bf.firebaseio.com</string>
+</dict>
+</plist>

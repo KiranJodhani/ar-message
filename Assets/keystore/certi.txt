@@ -1,0 +1,16 @@
+Alias name: armessage
+Creation date: 29 Mar 2020
+Entry type: PrivateKeyEntry
+Certificate chain length: 1
+Certificate[1]:
+Owner: O=DefaultCompany, OU=armessage, CN=armessage
+Issuer: O=DefaultCompany, OU=armessage, CN=armessage
+Serial number: 1521a900
+Valid from: Sun Mar 29 19:20:02 IST 2020 until: Mon Mar 17 19:20:02 IST 2070
+Certificate fingerprints:
+	 SHA1: A5:57:5C:C5:CF:87:CB:95:40:18:8C:8C:69:C5:1F:63:03:4F:28:23
+	 SHA256: 29:98:02:A2:2F:C1:37:1B:58:74:E7:AC:3A:10:8D:EF:FA:0C:DA:E8:B0:97:91:55:DD:71:A2:4B:F3:D1:76:2F
+Signature algorithm name: SHA1withRSA
+Subject Public Key Algorithm: 2048-bit RSA key
+Version: 3
+
