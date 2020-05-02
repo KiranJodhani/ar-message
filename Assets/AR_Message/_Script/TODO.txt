@@ -1,0 +1,12 @@
+﻿get location
+get user snapshot using child added event
+parse users into class
+show available user list
+
+
+V2
+
+loading to get location
+getlocation
+on go clicked
+save data 
