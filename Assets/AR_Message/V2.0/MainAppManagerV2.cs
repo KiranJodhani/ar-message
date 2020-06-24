@@ -28,18 +28,46 @@ public class MainAppManagerV2 : MonoBehaviour
     DatabaseReference userslocation_reference;
     public gps_Instance gps_envelope;
     public GameObject userElement;
+
+    public GameObject HasGyro;
     //[Header("****** SELECTED USER ********")]
     //public string LocationJsonStart;
     //public string LocationJsonEnd;
 
     void Start()
     {
-        #if PLATFORM_ANDROID
-            if (!Permission.HasUserAuthorizedPermission(Permission.Camera))
+
+#if !UNITY_EDITOR
+        if(!SystemInfo.supportsGyroscope)
+        {
+            print("#### NOT SUPPORTED");
+            HasGyro.SetActive(true);
+            return;
+        }
+        else
+        {
+            print("#### SUPPORTED");
+            HasGyro.SetActive(false);
+        }
+#endif
+
+
+#if PLATFORM_ANDROID
+        if (!Permission.HasUserAuthorizedPermission(Permission.Camera))
             {
                 Permission.RequestUserPermission(Permission.Camera);
             }
-        #endif
+
+        if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
+        {
+            Permission.RequestUserPermission(Permission.FineLocation);
+        }
+
+        if (!Permission.HasUserAuthorizedPermission(Permission.CoarseLocation))
+        {
+            Permission.RequestUserPermission(Permission.CoarseLocation);
+        }
+#endif
 
         HideAllScreens();
         FindingLocationScreen.SetActive(true);
@@ -56,6 +84,11 @@ public class MainAppManagerV2 : MonoBehaviour
                 Debug.Log("Could not resolve all Firebase dependencies: " + dependencyStatus);
             }
         });
+    }
+
+    public void CloseApplication()
+    {
+        Application.Quit();
     }
 
     void HideAllScreens()
@@ -75,7 +108,7 @@ public class MainAppManagerV2 : MonoBehaviour
 
     void InitGPSData()
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
             HideAllScreens();
             HomeScreen.SetActive(true);
             Vector2 _Location = new Vector2((float)EditorLat, (float)EditorLng);
@@ -83,11 +116,11 @@ public class MainAppManagerV2 : MonoBehaviour
             FinalLat = EditorLat;
             FinalLong = EditorLng;
             StartListner();
-        #endif
+#endif
 
-        #if !UNITY_EDITOR
+#if !UNITY_EDITOR
                 StartCoroutine(GetLocation());
-        #endif
+#endif
     }
 
     IEnumerator GetLocation()
@@ -136,15 +169,15 @@ public class MainAppManagerV2 : MonoBehaviour
 
     private void Update()
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
             FinalLat = EditorLat;
             FinalLong = EditorLng;
-        #endif
+#endif
 
-        #if !UNITY_EDITOR
+#if !UNITY_EDITOR
                 FinalLat = Input.location.lastData.latitude;
                 FinalLong = Input.location.lastData.longitude;
-        #endif
+#endif
 
         gps_envelope.lat=FinalLat.ToString();
         gps_envelope.lng = FinalLong.ToString();
@@ -159,7 +192,7 @@ public class MainAppManagerV2 : MonoBehaviour
         if(username_input.text!="" && username_input.text!=null)
         {
             string jsonString = JsonUtility.ToJson(gps_envelope);
-            userslocation_reference.Child(username_input.text).SetRawJsonValueAsync(jsonString);
+            userslocation_reference.Child(username_input.text.ToLower()).SetRawJsonValueAsync(jsonString);
             HideAllScreens();
         }
 
@@ -174,7 +207,7 @@ public class MainAppManagerV2 : MonoBehaviour
         }
         string json =  args.Snapshot.GetRawJsonValue();
         print(" CHANGED json : " + args.Snapshot.Key);
-        if (args.Snapshot.Key!= username_input.text)
+        if (args.Snapshot.Key!= username_input.text.ToLower())
         {
             GameObject tmp = GameObject.Find(args.Snapshot.Key);
             if (tmp)
@@ -186,7 +219,8 @@ public class MainAppManagerV2 : MonoBehaviour
                 Vector3 Pos = GPSEncoder.GPSToUCS(tmpLat, tmpLng);
                 tmp.transform.localPosition = Pos;
                 double Dis = DistanceTo(FinalLat, FinalLong, tmpLat, tmpLng);
-                if (Dis < 1)
+
+                if (Dis < 100)
                 {
                     tmp.SetActive(true);
                 }
@@ -223,8 +257,10 @@ public class MainAppManagerV2 : MonoBehaviour
             float tmpLng = float.Parse(args.Snapshot.Child("lng").Value.ToString());
             Vector3 Pos = GPSEncoder.GPSToUCS(tmpLat, tmpLng);
             tmp.transform.localPosition = Pos;
+            tmp.transform.GetChild(0).GetComponent<TextMesh>().text = tmp.name;
             double Dis = DistanceTo(FinalLat, FinalLong, tmpLat, tmpLng);
-            if (Dis < 1)
+            
+            if (Dis < 100)
             {
                 tmp.SetActive(true);
             }
